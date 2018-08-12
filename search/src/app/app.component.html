@@ -9,17 +9,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">eSearch</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active">
+        <!-- <li class="active">
           <a href="#">Link
             <span class="sr-only">(current)</span>
           </a>
-        </li>
+        </li> -->
         <!-- <li>
           <a href="#">Link</a>
         </li>
@@ -83,7 +83,7 @@
   <div class="row" style="margin:20px;">
     <div class="col-md-12">
       <div class="input-group" id="adv-search">
-        <input type="text" class="form-control" placeholder="Search for snippets" />
+        <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="searchstring" />
         <div class="input-group-btn">
           <div class="btn-group" role="group">
             <div class="dropdown dropdown-lg">
@@ -116,7 +116,7 @@
                 </form>
               </div>
             </div>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" (click)="onSearch()">
               <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             </button>
           </div>
@@ -126,16 +126,23 @@
   </div>
 </div>
 <div class="">
-  <div class="row" style="margin:20px;">
+  <div class="row" style="margin:20px;" *ngIf="list?.length>0">
+    <div class="col-md-12">
+      <h5 class="mb-1">Showing result of <strong>{{searchstring}}</strong></h5> 
+    </div>
+  </div>
+</div>
+<div class="">
+  <div class="row" style="margin:5px 20px 5px 20px;">
     <div class="col-md-12">
       <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,20]">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of getPage()">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
+            <h5 class="mb-1">{{item.company}}</h5>
+            <small>{{item.email}}</small>
           </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small>Donec id elit non mi porta.</small>
+          <p class="mb-1">{{item.address}}</p>
+          <small>{{item.greeting}}</small>
         </a>
       </div>
     </div>
@@ -143,8 +150,9 @@
 </div>
 <div class="">
   <div class="row" style="margin:20px;">
-    <div class="col-md-12">
-      <nav aria-label="Page navigation example" class="text-right">
+    <div class="col-md-12 text-right" *ngIf="list?.length>0">
+      <ngb-pagination class="text-right" [collectionSize]="listsize" [(page)]="page" [boundaryLinks]="true" [maxSize]="5" [rotate]="true" [ellipses]="true"></ngb-pagination>
+      <!-- <nav aria-label="Page navigation example" class="text-right">
         <ul class="pagination">
           <li class="page-item">
             <a class="page-link" href="#">Previous</a>
@@ -162,7 +170,7 @@
             <a class="page-link" href="#">Next</a>
           </li>
         </ul>
-      </nav>
+      </nav> -->
     </div>
   </div>
 </div>
